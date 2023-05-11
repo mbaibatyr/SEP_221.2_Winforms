@@ -29,30 +29,32 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
-            this.gvStudent = new System.Windows.Forms.DataGridView();
-            this.btSeacrh = new System.Windows.Forms.Button();
-            this.tbIdSearch = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.gbSearch = new System.Windows.Forms.GroupBox();
             this.gbInsUpd = new System.Windows.Forms.GroupBox();
-            this.tbLN = new System.Windows.Forms.TextBox();
-            this.tbFN = new System.Windows.Forms.TextBox();
-            this.cbGender = new System.Windows.Forms.ComboBox();
-            this.dtBd = new System.Windows.Forms.DateTimePicker();
             this.btAdd = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.dtBd = new System.Windows.Forms.DateTimePicker();
+            this.cbGender = new System.Windows.Forms.ComboBox();
+            this.tbFN = new System.Windows.Forms.TextBox();
+            this.tbLN = new System.Windows.Forms.TextBox();
+            this.gbSearch = new System.Windows.Forms.GroupBox();
+            this.btSeacrh = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbIdSearch = new System.Windows.Forms.TextBox();
+            this.gvStudent = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btUpd = new System.Windows.Forms.Button();
+            this.btDel = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gvStudent)).BeginInit();
-            this.gbSearch.SuspendLayout();
             this.gbInsUpd.SuspendLayout();
+            this.gbSearch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvStudent)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Info;
-            this.panel2.Controls.Add(this.radioButton2);
-            this.panel2.Controls.Add(this.radioButton1);
             this.panel2.Controls.Add(this.gbInsUpd);
             this.panel2.Controls.Add(this.gbSearch);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -61,44 +63,70 @@
             this.panel2.Size = new System.Drawing.Size(1077, 92);
             this.panel2.TabIndex = 1;
             // 
-            // gvStudent
+            // gbInsUpd
             // 
-            this.gvStudent.AllowUserToAddRows = false;
-            this.gvStudent.AllowUserToDeleteRows = false;
-            this.gvStudent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gvStudent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gvStudent.Location = new System.Drawing.Point(0, 92);
-            this.gvStudent.Name = "gvStudent";
-            this.gvStudent.ReadOnly = true;
-            this.gvStudent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gvStudent.Size = new System.Drawing.Size(1077, 512);
-            this.gvStudent.TabIndex = 0;
+            this.gbInsUpd.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.gbInsUpd.Controls.Add(this.btDel);
+            this.gbInsUpd.Controls.Add(this.btUpd);
+            this.gbInsUpd.Controls.Add(this.label5);
+            this.gbInsUpd.Controls.Add(this.label4);
+            this.gbInsUpd.Controls.Add(this.label3);
+            this.gbInsUpd.Controls.Add(this.label2);
+            this.gbInsUpd.Controls.Add(this.btAdd);
+            this.gbInsUpd.Controls.Add(this.dtBd);
+            this.gbInsUpd.Controls.Add(this.cbGender);
+            this.gbInsUpd.Controls.Add(this.tbFN);
+            this.gbInsUpd.Controls.Add(this.tbLN);
+            this.gbInsUpd.Dock = System.Windows.Forms.DockStyle.Left;
+            this.gbInsUpd.Location = new System.Drawing.Point(206, 0);
+            this.gbInsUpd.Name = "gbInsUpd";
+            this.gbInsUpd.Size = new System.Drawing.Size(508, 92);
+            this.gbInsUpd.TabIndex = 4;
+            this.gbInsUpd.TabStop = false;
+            this.gbInsUpd.Text = "Добавление/изменение";
             // 
-            // btSeacrh
+            // btAdd
             // 
-            this.btSeacrh.Location = new System.Drawing.Point(78, 47);
-            this.btSeacrh.Name = "btSeacrh";
-            this.btSeacrh.Size = new System.Drawing.Size(100, 23);
-            this.btSeacrh.TabIndex = 0;
-            this.btSeacrh.Text = "Найти/обновить";
-            this.btSeacrh.UseVisualStyleBackColor = true;
-            this.btSeacrh.Click += new System.EventHandler(this.btSeacrh_Click);
+            this.btAdd.Location = new System.Drawing.Point(406, 14);
+            this.btAdd.Name = "btAdd";
+            this.btAdd.Size = new System.Drawing.Size(75, 23);
+            this.btAdd.TabIndex = 6;
+            this.btAdd.Text = "Добавить";
+            this.btAdd.UseVisualStyleBackColor = true;
+            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
             // 
-            // tbIdSearch
+            // dtBd
             // 
-            this.tbIdSearch.Location = new System.Drawing.Point(78, 17);
-            this.tbIdSearch.Name = "tbIdSearch";
-            this.tbIdSearch.Size = new System.Drawing.Size(100, 20);
-            this.tbIdSearch.TabIndex = 1;
+            this.dtBd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtBd.Location = new System.Drawing.Point(94, 63);
+            this.dtBd.Name = "dtBd";
+            this.dtBd.Size = new System.Drawing.Size(100, 20);
+            this.dtBd.TabIndex = 5;
             // 
-            // label1
+            // cbGender
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Введите ID";
+            this.cbGender.FormattingEnabled = true;
+            this.cbGender.Items.AddRange(new object[] {
+            "Мужской",
+            "Женский"});
+            this.cbGender.Location = new System.Drawing.Point(272, 61);
+            this.cbGender.Name = "cbGender";
+            this.cbGender.Size = new System.Drawing.Size(100, 21);
+            this.cbGender.TabIndex = 4;
+            // 
+            // tbFN
+            // 
+            this.tbFN.Location = new System.Drawing.Point(272, 20);
+            this.tbFN.Name = "tbFN";
+            this.tbFN.Size = new System.Drawing.Size(100, 20);
+            this.tbFN.TabIndex = 3;
+            // 
+            // tbLN
+            // 
+            this.tbLN.Location = new System.Drawing.Point(94, 20);
+            this.tbLN.Name = "tbLN";
+            this.tbLN.Size = new System.Drawing.Size(100, 20);
+            this.tbLN.TabIndex = 2;
             // 
             // gbSearch
             // 
@@ -114,86 +142,101 @@
             this.gbSearch.TabStop = false;
             this.gbSearch.Text = "Поиск";
             // 
-            // gbInsUpd
+            // btSeacrh
             // 
-            this.gbInsUpd.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.gbInsUpd.Controls.Add(this.btAdd);
-            this.gbInsUpd.Controls.Add(this.dtBd);
-            this.gbInsUpd.Controls.Add(this.cbGender);
-            this.gbInsUpd.Controls.Add(this.tbFN);
-            this.gbInsUpd.Controls.Add(this.tbLN);
-            this.gbInsUpd.Dock = System.Windows.Forms.DockStyle.Left;
-            this.gbInsUpd.Location = new System.Drawing.Point(206, 0);
-            this.gbInsUpd.Name = "gbInsUpd";
-            this.gbInsUpd.Size = new System.Drawing.Size(508, 92);
-            this.gbInsUpd.TabIndex = 4;
-            this.gbInsUpd.TabStop = false;
-            this.gbInsUpd.Text = "Добавление/изменение";
+            this.btSeacrh.Location = new System.Drawing.Point(78, 47);
+            this.btSeacrh.Name = "btSeacrh";
+            this.btSeacrh.Size = new System.Drawing.Size(100, 23);
+            this.btSeacrh.TabIndex = 0;
+            this.btSeacrh.Text = "Найти/обновить";
+            this.btSeacrh.UseVisualStyleBackColor = true;
+            this.btSeacrh.Click += new System.EventHandler(this.btSeacrh_Click);
             // 
-            // tbLN
+            // label1
             // 
-            this.tbLN.Location = new System.Drawing.Point(94, 20);
-            this.tbLN.Name = "tbLN";
-            this.tbLN.Size = new System.Drawing.Size(100, 20);
-            this.tbLN.TabIndex = 2;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Введите ID";
             // 
-            // tbFN
+            // tbIdSearch
             // 
-            this.tbFN.Location = new System.Drawing.Point(272, 20);
-            this.tbFN.Name = "tbFN";
-            this.tbFN.Size = new System.Drawing.Size(100, 20);
-            this.tbFN.TabIndex = 3;
+            this.tbIdSearch.Location = new System.Drawing.Point(78, 17);
+            this.tbIdSearch.Name = "tbIdSearch";
+            this.tbIdSearch.Size = new System.Drawing.Size(100, 20);
+            this.tbIdSearch.TabIndex = 1;
             // 
-            // cbGender
+            // gvStudent
             // 
-            this.cbGender.FormattingEnabled = true;
-            this.cbGender.Items.AddRange(new object[] {
-            "Мужской",
-            "Женский"});
-            this.cbGender.Location = new System.Drawing.Point(272, 61);
-            this.cbGender.Name = "cbGender";
-            this.cbGender.Size = new System.Drawing.Size(100, 21);
-            this.cbGender.TabIndex = 4;
+            this.gvStudent.AllowUserToAddRows = false;
+            this.gvStudent.AllowUserToDeleteRows = false;
+            this.gvStudent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvStudent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gvStudent.Location = new System.Drawing.Point(0, 92);
+            this.gvStudent.Name = "gvStudent";
+            this.gvStudent.ReadOnly = true;
+            this.gvStudent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gvStudent.Size = new System.Drawing.Size(1077, 512);
+            this.gvStudent.TabIndex = 0;
+            this.gvStudent.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvStudent_CellClick);
             // 
-            // dtBd
+            // label2
             // 
-            this.dtBd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtBd.Location = new System.Drawing.Point(94, 63);
-            this.dtBd.Name = "dtBd";
-            this.dtBd.Size = new System.Drawing.Size(100, 20);
-            this.dtBd.TabIndex = 5;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(36, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Фамилия";
             // 
-            // btAdd
+            // label3
             // 
-            this.btAdd.Location = new System.Drawing.Point(406, 60);
-            this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(75, 23);
-            this.btAdd.TabIndex = 6;
-            this.btAdd.Text = "Добавить";
-            this.btAdd.UseVisualStyleBackColor = true;
-            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(238, 23);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Имя";
             // 
-            // radioButton1
+            // label4
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(816, 24);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(85, 17);
-            this.radioButton1.TabIndex = 5;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 65);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(86, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Дата рождения";
             // 
-            // radioButton2
+            // label5
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(816, 50);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(85, 17);
-            this.radioButton2.TabIndex = 6;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton2";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(237, 64);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(27, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Пол";
+            // 
+            // btUpd
+            // 
+            this.btUpd.Location = new System.Drawing.Point(406, 40);
+            this.btUpd.Name = "btUpd";
+            this.btUpd.Size = new System.Drawing.Size(75, 23);
+            this.btUpd.TabIndex = 11;
+            this.btUpd.Text = "Обновить";
+            this.btUpd.UseVisualStyleBackColor = true;
+            this.btUpd.Click += new System.EventHandler(this.btUpd_Click);
+            // 
+            // btDel
+            // 
+            this.btDel.Location = new System.Drawing.Point(406, 65);
+            this.btDel.Name = "btDel";
+            this.btDel.Size = new System.Drawing.Size(75, 23);
+            this.btDel.TabIndex = 12;
+            this.btDel.Text = "Удалить";
+            this.btDel.UseVisualStyleBackColor = true;
+            this.btDel.Click += new System.EventHandler(this.btDel_Click);
             // 
             // fmStudent
             // 
@@ -207,12 +250,11 @@
             this.Text = "fmStudent";
             this.Load += new System.EventHandler(this.fmStudent_Load);
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gvStudent)).EndInit();
-            this.gbSearch.ResumeLayout(false);
-            this.gbSearch.PerformLayout();
             this.gbInsUpd.ResumeLayout(false);
             this.gbInsUpd.PerformLayout();
+            this.gbSearch.ResumeLayout(false);
+            this.gbSearch.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvStudent)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -230,7 +272,11 @@
         private System.Windows.Forms.ComboBox cbGender;
         private System.Windows.Forms.TextBox tbFN;
         private System.Windows.Forms.TextBox tbLN;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btUpd;
+        private System.Windows.Forms.Button btDel;
     }
 }
