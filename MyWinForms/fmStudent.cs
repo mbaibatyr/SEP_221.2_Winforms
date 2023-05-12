@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,8 @@ namespace MyWinForms
         private void fmStudent_Load(object sender, EventArgs e)
         {
             gvStudent.DataSource = RefreshData(-1);
+            dtBd.Value = new DateTime(2000, 1, 1);
+            cbGenderReport.SelectedIndex = 0;
         }
 
         private void btSeacrh_Click(object sender, EventArgs e)
@@ -50,6 +53,21 @@ namespace MyWinForms
             if (confirm != DialogResult.OK)
             {
                 MessageBox.Show("Отменено пользавателем", "Отмена", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if(tbFN.Text == "")
+            {
+                MessageBox.Show("Поле Имя обязатльно для заполнения");
+                tbFN.Focus();
+                return;
+            }
+
+            int diff = DateTime.Now.Year - dtBd.Value.Year;
+            if (diff <= 17)
+            {
+                MessageBox.Show("Некорректная дата рождения");
+                dtBd.Focus();
                 return;
             }
             using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["conStr"]))
@@ -126,6 +144,42 @@ namespace MyWinForms
                 }
             }
         }
+
+        private void btRepByGender_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["conStr"]))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("pStudentReport_GetStudentByGender @gender", con))
+                {
+                    string gender = null;
+                    switch (cbGenderReport.SelectedIndex)
+                    {
+                        case 0:
+                            gender = "a";
+                            break;
+                        case 1:
+                            gender = "m";
+                            break;
+                        case 2:
+                            gender = "f";
+                            break;
+                        default:
+                            break;
+                    }
+                    cmd.Parameters.AddWithValue("gender", gender);
+                    DataTable dt = new DataTable();
+                    dt.Load(cmd.ExecuteReader());
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("lastname;firstname;gender");
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        sb.AppendLine(item[1].ToString() + ";" + item[2].ToString() + ";" + item[4].ToString());
+                    }
+                    File.WriteAllText(DateTime.Now.ToString("yyyy_MM_dd HH_mm_ss") + ".csv", sb.ToString());                    
+                }
+            }
+        }
     }
 }
 
@@ -196,4 +250,18 @@ begin
 	)
 	select 1 status
 end
+
+
+create proc pStudentReport_GetStudentByGender --'a'
+@gender char(1)
+as
+select	s.id,
+		s.lastName,
+		s.firstName,
+		s.dateBirth,
+		s.gender
+from student s
+where (@gender = 'a' or s.gender = @gender)
+
+
  */
