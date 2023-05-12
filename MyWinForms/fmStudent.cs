@@ -46,6 +46,12 @@ namespace MyWinForms
 
         private void btAdd_Click(object sender, EventArgs e)
         {
+            var confirm = MessageBox.Show("Добавить нового студента", "Добавление", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (confirm != DialogResult.OK)
+            {
+                MessageBox.Show("Отменено пользавателем", "Отмена", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["conStr"]))
             {
                 con.Open();
@@ -95,6 +101,18 @@ namespace MyWinForms
 
         private void btDel_Click(object sender, EventArgs e)
         {
+            var confirm = MessageBox.Show("Удалить выделенного студента?", 
+                "Удаление", 
+                MessageBoxButtons.OKCancel, 
+                MessageBoxIcon.Information);
+            if (confirm != DialogResult.OK)
+            {
+                MessageBox.Show("Отменено пользователем", 
+                    "Удаление", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
+                return;
+            }
             using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["conStr"]))
             {
                 con.Open();
@@ -128,6 +146,23 @@ CREATE proc pStudentDel --2
 @id int
 as
 delete from student
+where id = @id
+
+
+
+create proc pStudentUpd 
+@id int, 
+@firstName nvarchar(200), 
+@lastName nvarchar(200), 
+@dateBirth datetime, 
+@gender char(1)
+as
+update Student
+set 
+firstName = @firstName, 
+lastName = @lastName, 
+dateBirth = @dateBirth, 
+gender = @gender
 where id = @id
 
 
