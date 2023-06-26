@@ -3,6 +3,7 @@ using ExcelDataReader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
@@ -18,6 +19,7 @@ namespace Sample
 {
     public partial class Form1 : Form
     {
+        List<Data> lst;
         public Form1()
         {
             InitializeComponent();
@@ -80,14 +82,32 @@ namespace Sample
             return sb.ToString();
         }
 
+        DataTable getData()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["conStr"]))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("select firstname, dt from Data", conn))
+                {
+                    dt.Load(cmd.ExecuteReader());
+                }
+                conn.Close();
+            }
+
+            return dt;
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             //DateTime date = DateTime.Parse("2015-01-01");
-            DataTable dt = new DataTable();
-            dt.Columns.Add("firstname", typeof(string));
-            dt.Columns.Add("dt", typeof(DateTime));
-            dt.Rows.Add(new object[] { "murat", DateTime.Parse("2015-01-05") });
-            dt.Rows.Add(new object[] { "shynar", DateTime.Parse("2015-01-05") });
+            //DataTable dt = new DataTable();
+            //dt.Columns.Add("firstname", typeof(string));
+            //dt.Columns.Add("dt", typeof(DateTime));
+            //dt.Rows.Add(new object[] { "murat", DateTime.Parse("2015-01-05") });
+            //dt.Rows.Add(new object[] { "Arman", DateTime.Parse("2015-01-05") });
+
+            DataTable dt = getData();
 
             string fileName = @"C:\Users\байбатыровм\Documents\Книга2.xlsx";
             using (var excelWorkbook = new XLWorkbook(fileName))
@@ -97,14 +117,18 @@ namespace Sample
                 {
                     var dt1 = DateTime.Parse(row.Cell(1).GetString());
                     var dt2 = DateTime.Parse(row.Cell(3).GetString());
-                    DataRow[] result = dt.Select("firstname = '" + row.Cell(2).GetString() + "' and dt >= '" + dt1 + "' and dt <= '" + dt2 + "'");
+                    DataRow[] result = dt.Select("firstname = '" + row.Cell(2).GetString() +
+                        "' and dt >= '" + dt1 + "' and dt <= '" + dt2 + "'");
                     if (result.Count() > 0)
                         row.Cell(4).SetValue("ok");
                     else
                         row.Cell(4).SetValue("-");
+                    //Insert(row.Cell(1).GetString(), row.Cell(2).GetString());
+
                 }
                 excelWorkbook.Save();
             }
+            MessageBox.Show("done");
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -146,7 +170,7 @@ namespace Sample
                 conn.Close();
             }
 
-            
+
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -168,7 +192,7 @@ namespace Sample
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("select lastName, [month], factSales from sales", con))
                 {
-                    dtDB.Load(cmd.ExecuteReader());  
+                    dtDB.Load(cmd.ExecuteReader());
                 }
                 con.Close();
             }
@@ -179,9 +203,71 @@ namespace Sample
             }
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            lst = new List<Data>();
+            DataTable dt = getData();
+            string fileName = @"C:\Users\байбатыровм\Documents\Книга2.xlsx";
+            using (var excelWorkbook = new XLWorkbook(fileName))
+            {
+                var Rows = excelWorkbook.Worksheet(1).RowsUsed().Skip(1);
+                foreach (IXLRow row in Rows)
+                {
+
+                    DataRow[] result = dt.Select("firstname = '" + row.Cell(2).GetString() + "'");
+                    if (result.Count() > 0)
+                        continue;
+                    else
+                        lst.Add
+                            (
+                                new Data
+                                {
+                                    firstname = row.Cell(2).GetString(),
+                                    dt = DateTime.Parse(row.Cell(1).GetString())
+                                }
+                            );                    
+
+                }
+                Insert(lst);
+
+            }
+            MessageBox.Show("done");
+        }
+
+        private void Insert(List<Data> lst)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["conStr"]))
+            {
+                conn.Open();
+                string sql = "insert into Data (firstname, dt) values (N'{0}', '{1}')";
+                foreach (var item in lst)
+                {
+                    using (SqlCommand cmd = new SqlCommand(string.Format(sql, item.firstname, item.dt), conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                
+                conn.Close();
+            }
+        }
+
         private void button3_Click_1(object sender, EventArgs e)
         {
-
+            DataTable dt = getData();
+            string fileName = @"C:\Users\байбатыровм\Documents\Книга2.xlsx";
+            using (var excelWorkbook = new XLWorkbook(fileName))
+            {
+                excelWorkbook.AddWorksheet(dt, "Лист2");
+                excelWorkbook.Save();
+            }
+            MessageBox.Show("done");
         }
+    }
+
+    public class Data
+    {
+        public string firstname { get; set; }
+        public DateTime dt { get; set; }
     }
 }
