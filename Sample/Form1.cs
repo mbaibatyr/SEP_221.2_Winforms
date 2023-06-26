@@ -82,35 +82,30 @@ namespace Sample
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string fileName = @"C:\temp\срок аренды.xlsx";
+            //DateTime date = DateTime.Parse("2015-01-01");
+            DataTable dt = new DataTable();
+            dt.Columns.Add("firstname", typeof(string));
+            dt.Columns.Add("dt", typeof(DateTime));
+            dt.Rows.Add(new object[] { "murat", DateTime.Parse("2015-01-05") });
+            dt.Rows.Add(new object[] { "shynar", DateTime.Parse("2015-01-05") });
+
+            string fileName = @"C:\Users\байбатыровм\Documents\Книга2.xlsx";
             using (var excelWorkbook = new XLWorkbook(fileName))
             {
-                var nonEmptyDataRows = excelWorkbook.Worksheet(1).RowsUsed();
-
-                foreach (var dataRow in nonEmptyDataRows)
+                var Rows = excelWorkbook.Worksheet(1).RowsUsed().Skip(1);
+                foreach (IXLRow row in Rows)
                 {
-                    //for row number check
-                    //if (dataRow.RowNumber() >= 3 && dataRow.RowNumber() <= 20)
-                    {
-                        dataRow.Cell(10).Style.NumberFormat.Format = "dd.MM.yyyy";
-                        DateTime dt;
-
-                        if (DateTime.TryParse(dataRow.Cell(10).Value.ToString(), out dt))
-                            Text = dt.ToString();
-
-
-                        string st = $"{dataRow.Cell(8).Value.ToString()} " +
-                            $"{dataRow.Cell(10).Value}  " +
-                            $"{dataRow.Cell(11).Value.ToString()}";
-                        Text = st;
-
-                        //Thread.Sleep(3000);
-
-                    }
+                    var dt1 = DateTime.Parse(row.Cell(1).GetString());
+                    var dt2 = DateTime.Parse(row.Cell(3).GetString());
+                    DataRow[] result = dt.Select("firstname = '" + row.Cell(2).GetString() + "' and dt >= '" + dt1 + "' and dt <= '" + dt2 + "'");
+                    if (result.Count() > 0)
+                        row.Cell(4).SetValue("ok");
+                    else
+                        row.Cell(4).SetValue("-");
                 }
+                excelWorkbook.Save();
             }
         }
-
         private void button3_Click(object sender, EventArgs e)
         {
 
@@ -182,6 +177,11 @@ namespace Sample
             {
                 var dr = dtExcel.Select("f2 = '" + item[0].ToString() + "'");
             }
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
