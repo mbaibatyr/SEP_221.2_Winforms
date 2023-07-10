@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using ExcelDataReader;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace Sample
 {
     public partial class Form1 : Form
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         List<Data> lst;
         public Form1()
         {
@@ -225,7 +227,7 @@ namespace Sample
                                     firstname = row.Cell(2).GetString(),
                                     dt = DateTime.Parse(row.Cell(1).GetString())
                                 }
-                            );                    
+                            );
 
                 }
                 Insert(lst);
@@ -247,7 +249,7 @@ namespace Sample
                         cmd.ExecuteNonQuery();
                     }
                 }
-                
+
                 conn.Close();
             }
         }
@@ -262,6 +264,48 @@ namespace Sample
                 excelWorkbook.Save();
             }
             MessageBox.Show("done");
+        }
+
+        private void btLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dt = getData();
+                //var array = new string[1];
+                //array[10] = "";
+                //logger.Info("btLog_Click:getData:rowCount: " + dt.Rows.Count);
+                Text = addLog("INFO", "btLog_Click: getData:rowCount: " + dt.Rows.Count, "User1");
+            }
+            catch (Exception err)
+            {
+                //logger.Error("btLog_Click: " + err.Message);
+                Text = addLog("ERROR", "btLog_Click: " + err.Message, "User1");
+            }
+        }
+
+        string addLog(string logType, string logText, string user)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["conStr"]))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("pMyLog", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@logType", logType);
+                        cmd.Parameters.AddWithValue("@logText", logText);
+                        cmd.Parameters.AddWithValue("@user", user);
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        return "ok";
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                return "error: " + err.Message;
+            }
         }
     }
 
